@@ -118,11 +118,14 @@ def parse_structure(filename, verbose=False):
     :param verbose: print out messages during the parsing process
     :return: a list of FileRange namedtuples representing meta and data parts and a list of FileRange namedtuples with key information
 
-    >>> structure, keys = parse_structure('stimspikes1.dat')
+    >>>structure, keys = parse_structure('stimspikes1.dat')
 
     """
     if verbose: print(filename, 80*'-')
-    within_key = within_meta_block = within_data_block = False
+    # within_key = within_meta_block = within_data_block = False
+    within_key = False
+    within_meta_block = False
+    within_data_block = False
     start = None
     structure = []
     keys = []
@@ -333,7 +336,6 @@ class RelacsFile(object):
         metas, keys, datas = list(map(list, list(zip(*self.content))))
         idx = list(range(len(self.content)))
         return self._finalize_selection(metas, keys, datas, idx)
-
 
     def _select(self, selectionfunc, selection=None, **kwargs):
         if selection is not None:
